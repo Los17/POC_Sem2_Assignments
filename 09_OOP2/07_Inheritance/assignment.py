@@ -1,6 +1,6 @@
 
 class Rectangle:
-    
+
     def __init__(self, base: float, height: float) -> None:
         if (base < 0):
             self.__base = 0
@@ -24,11 +24,7 @@ class Rectangle:
         return self.__base * self.__height
 
     def __str__(self) -> str:
-        # Rectangle of base:3, height:4
-        return "Rectangle of base:" + self.__base + ", height:" + self.__height
-        pass
-        #Rectangle with base:3, height:4
-        return "Rectangle with base:" + str(self.__base) + ", height:" + str(self.__height)
+        return "Rectangle with base:" + str(self.__base) + ",height:" + str(self.__height)
 
 class Square(Rectangle):
     def __init__(self, side: float) -> None:
@@ -41,3 +37,8 @@ class Square(Rectangle):
     def __str__(self) -> str:
 
         return "Square with side length:" + str(self.__side)
+
+
+square1 = Square(3)
+print(square1)
+print("The area of square1 is", square1.getarea())
