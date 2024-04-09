@@ -26,7 +26,7 @@ class Rectangle:
     def __str__(self) -> str:
         return "Rectangle with base:" + str(self.__base) + ",height:" + str(self.__height)
 
-class Square(Rectangle):
+class Square (Rectangle):
     def __init__(self, side: float) -> None:
           super().__init__(side, side)
           self.__.side = side
@@ -39,6 +39,6 @@ class Square(Rectangle):
         return "Square with side length:" + str(self.__side)
 
 
-square1 = Square(3)
+square1 = Square (5)
 print(square1)
 print("The area of square1 is", square1.getarea())
