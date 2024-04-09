@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 class Rectangle:
 
@@ -34,9 +33,6 @@ class Rectangle:
 
     def get_perimeter(self) -> float:
         return 2 * self.__base + 2 * self.__height
-<<<<<<< HEAD
-   
-=======
 
 >>>>>>> ca3810c32384bd45e462c85be9193f121de05433
     def get_area(self) -> float:
