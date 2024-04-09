@@ -22,7 +22,6 @@ def game_loop():
         user_request = input("Enter STOP to end or anything else to continue!")
         if user_request.__eq__("STOP"):
             break
-        print("Loopis runnning")
     print("GAME IS OVER!")
 
 
