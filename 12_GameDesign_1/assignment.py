@@ -19,6 +19,7 @@ def print_grid():
 def game_loop():
     print("Welcome to tic tac toe")
     while(True):
+        print_grid()
         user_request = input("Enter STOP to end or anything else to continue!")
         if user_request.__eq__("STOP"):
             break
