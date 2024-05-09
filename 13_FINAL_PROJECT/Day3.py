@@ -57,9 +57,33 @@ class Game(tk.Frame):
             self.canvas.itemconfig(self.hud, text=text)
 
     def start_game(self):
-        pass
-
+        self.canvas.unbind("<space>")
+        self.canvas.delete(self.text)
+        self.paddle.ball = None
+        self.game_loop()
     
+    def game_loop(self):
+        self.check_collisions
+        num_bricks = len(self.canvas.find_withtag("brick"))
+        if num_bricks == 0:
+            self.ball.speed = None
+            self.draw_text(300, 200, "You win!")
+        elif self.ball.get_position()[3] >= self.height:
+            self.ball.speed = None
+            self.lives -= 1
+            if self.lives < 0:
+                self.draw_text(300, 200, "Game Over")
+            else:
+                self.after(1000, self.setup_game)
+        else:
+            self.ball.update()
+            self.after(50, self.game_loop())
+
+    def check_collisions(self):
+        ball_coords = self.get_position
+        items = self.canvas.find_overlapping(*ball_coords)
+        objects = [self.items[x] for x in items if x in self.items]
+        self.ball.collide(objects)
 
 
 class GameObject(object):
@@ -89,8 +113,40 @@ class Ball(GameObject):
         item = canvas.create_oval(x1, y1, x2, y2, fill=color)
         super(Ball, self).__init__(canvas, item)
 
+    def update(self):
+        coords = self.get_position()
+        width = self.canvas.winfo_width()
+        if coords[0] <= 0 or coords[2] >= width:
+            self.direction[0] *= -1
+        if coords[1] <= 0:
+            self.direction[1] *= -1
+        x = self.direction[0] * self.speed
+        y = self.direction[1] * self.speed
+        #YOUDO_30:  call the move method for self passing in the appropriate arguments
+
+    def collide(self, game_objects):
+        #YOUDO-30:  same logic as YOUDO-28
+        x = 1
+        if len(game_objects) > 1:
+            #YOUDO-32:  flip the direction like we did in update for the y direction (index 1)
+            pass  #YOUDO-33:  remove this when done
+        elif len(game_objects) == 1:
+            game_object = game_objects[0]
+            coords = self.get_position()
+            if x > coords[2]:
+                self.direction[0] = 1
+        elif x < coords[0]:
+                self.direction[0] = -1
+        else:
+                self.direction[1] * -1 
+        
+        for game_object in game_objects:
+            if(isinstance(game_object, Brick)):
+                game_object.hit()
+
+
 class Paddle(GameObject):
-    def __init__(self, canvas, x, y):  #(x, y) is the center of the paddle
+    def __init__(self, canvas, x, y, item):  #(x, y) is the center of the paddle
         self.width = 80
         self.height = 10
         self.ball = None
@@ -99,7 +155,7 @@ class Paddle(GameObject):
         x2 = x + self.width / 2
         y2 = y + self.height / 2
         color = "blue"
-        item = canvas.create_rectangle(x1 , y1 , x2 , y2 , color)
+        canvas.create_rectangle(x1 , y1 , x2 , y2 , color)
         super(Paddle, self).__init__(canvas, item)
         
 
@@ -121,7 +177,7 @@ class Paddle(GameObject):
 class Brick(GameObject):
     COLORS = {1 : "#999999", 2 : "#555555", 3 : "#222222"}
 
-    def __init__(self, canvas, x, y, hits):
+    def __init__(self, canvas, x, y, hits, item):
         self.width = 75
         self.height = 20
         self.hits = hits
@@ -130,7 +186,7 @@ class Brick(GameObject):
         y1 = y - self.height / 2
         x2 = x + self.width / 2
         y2 = y + self.height / 2
-        item = canvas.create_rectangle(x1 , y1 , x2 , y2 , color , tags="brick")
+        canvas.create_rectangle(x1 , y1 , x2 , y2 , color , tags="brick")
         super(Brick, self).__init__(canvas, item)
 
     def hit(self):
