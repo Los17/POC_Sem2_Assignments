@@ -2,8 +2,8 @@ file_path = "C:\\Users\\Nicholas Armstrong\\Development\\POC_Sem2_Assignments\\1
 
 try:
     stream = open(file_path)
-    #YOUDO print to console using stream.read()
-    #YOUDO don't forget to close the stream
+    print(stream.read())
+    
 except:
     pass
 ##YOUDO rest of the program for reading and printing to the console
