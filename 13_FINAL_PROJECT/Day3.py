@@ -126,18 +126,17 @@ class Ball(GameObject):
 
     def collide(self, game_objects):
         coords = self.get_position()
-        x = coords[0] + coords[2] / 2
+        x = (coords[0] + coords[2]) / 2
         if len(game_objects) > 1:
-            self.direction[1] *= -1
-            
+            self.direction[1] *= -1 
         elif len(game_objects) == 1:
             game_object = game_objects[0]
             coords = self.get_position()
             if x > coords[2]:
                 self.direction[0] = 1
-        elif x < coords[0]:
+            elif x < coords[0]:
                 self.direction[0] = -1
-        else:
+            else:
                 self.direction[1] *= -1 
         
         for game_object in game_objects:
